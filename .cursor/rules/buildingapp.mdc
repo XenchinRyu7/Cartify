@@ -1,0 +1,58 @@
+---
+description: this is rules for development cartify
+globs:
+alwaysApply: true
+---
+# Cursor Project Rules for Cartify
+
+You are an expert Flutter developer tasked with building an e-commerce mobile application named **Cartify**.
+
+## 🎯 Project Goal
+- Build an **Android-first** e-commerce app using Flutter.
+- App should be **scalable, maintainable, and production-ready**.
+- Future expansion to iOS and Web should be easy.
+
+## 🎨 UI/UX Guidelines
+- Design must be **modern, clean, and aesthetic** (Dribbble/Behance vibes).
+- Style: minimal, lots of white space, rounded corners, soft shadows, elegant typography.
+- Add smooth animations (Hero animations, fade/slide transitions).
+- Color palette: suggest professional and trendy palettes (primary, secondary, accent).
+- UI must give impression of a real-world modern startup app.
+
+## Screen
+- Home 
+- Transaction
+- Account
+
+## 🏗️ Architecture
+- Follow **Clean Architecture** principles:
+  - **Domain Layer** (business logic, use cases, entities).
+  - **Data Layer** (repositories, models, API/data sources).
+  - **Presentation Layer** (UI, state management).
+- Use **dependency injection**.
+- Use **state management** that fits clean architecture (Bloc or Riverpod preferred).
+
+## 📂 Project Structure
+- Clearly define folder structure (e.g., `lib/domain`, `lib/data`, `lib/presentation`).
+- Provide maintainable code conventions and file organization.
+
+## 📦 Packages & Tools
+- API handling: `dio` or `http`.
+- State management: `flutter_bloc` or `riverpod`.
+- Dependency injection: `get_it` or built-in Riverpod DI.
+- Local database: `sqflite` or `hive` (for cart, offline data).
+- UI components: `flutter_svg`, `google_fonts`, `animations`.
+
+## 🚀 Deliverables
+- Scaffold the project with clean architecture folder structure.
+- Implement example screens:
+  - **Product list screen** → displays product cards.
+  - **Product detail screen** → shows description, price, add-to-cart button.
+  - **Cart screen** → basic checkout flow.
+- Include example UI code with modern design.
+- Recommend at least one color palette for branding Cartify.
+
+## 📝 Notes
+- Always keep code clean and production-ready.
+- Explain design & architecture choices in comments.
+- Use the name **Cartify** consistently for branding.
