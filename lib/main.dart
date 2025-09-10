@@ -5,6 +5,7 @@ import 'core/constants/app_constants.dart';
 import 'core/di/injection.dart';
 import 'core/theme/app_theme.dart';
 import 'presentation/screens/main_navigation/main_navigation_screen.dart';
+import 'presentation/screens/auth/auth_router.dart';
 
 /// Main entry point of the Cartify e-commerce application
 void main() async {
@@ -45,6 +46,8 @@ class CartifyApp extends StatelessWidget {
       darkTheme: AppTheme.darkTheme,
       themeMode: ThemeMode.light, // Can be changed to system or dark
       home: const MainNavigationScreen(),
+      onGenerateRoute: AuthRouter.generateRoute,
+      initialRoute: AuthRouter.splash,
     );
   }
 }

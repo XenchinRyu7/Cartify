@@ -57,6 +57,15 @@ class Validators {
     return null;
   }
 
+  /// Alias for email validation
+  static String? validateEmail(String? value) => email(value);
+
+  /// Alias for password validation
+  static String? validatePassword(String? value) => password(value);
+
+  /// Alias for name validation
+  static String? validateName(String? value) => name(value);
+
   /// Validate phone number
   static String? phoneNumber(String? value) {
     if (value == null || value.isEmpty) {
