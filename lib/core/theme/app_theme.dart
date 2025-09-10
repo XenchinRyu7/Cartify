@@ -2,24 +2,28 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'app_colors.dart';
 
-/// Modern theme configuration for Cartify e-commerce app
-/// Implements Material Design 3 with custom styling for modern look
+/// Futuristic theme configuration for Cartify e-commerce app
+/// Implements dark mode with glassmorphism and neon effects
 class AppTheme {
-  // Typography
-  // static const String _fontFamily = 'Inter'; // Modern, clean font
-  
-  // Text Styles
-  static final TextStyle _baseTextStyle = GoogleFonts.inter(
+  // Typography - Modern and clean font
+  static final TextStyle _baseTextStyle = GoogleFonts.poppins(
     color: AppColors.textPrimary,
     fontWeight: FontWeight.w400,
   );
 
-  // Headline Styles
+  // Headline Styles - Glowing effect
   static final TextStyle headlineLarge = _baseTextStyle.copyWith(
     fontSize: 32,
     fontWeight: FontWeight.w700,
     letterSpacing: -0.5,
     height: 1.2,
+    shadows: [
+      Shadow(
+        color: AppColors.primary.withValues(alpha: 0.5),
+        blurRadius: 10,
+        offset: const Offset(0, 0),
+      ),
+    ],
   );
 
   static final TextStyle headlineMedium = _baseTextStyle.copyWith(
@@ -27,6 +31,13 @@ class AppTheme {
     fontWeight: FontWeight.w600,
     letterSpacing: -0.25,
     height: 1.3,
+    shadows: [
+      Shadow(
+        color: AppColors.primary.withValues(alpha: 0.3),
+        blurRadius: 8,
+        offset: const Offset(0, 0),
+      ),
+    ],
   );
 
   static final TextStyle headlineSmall = _baseTextStyle.copyWith(
@@ -116,6 +127,13 @@ class AppTheme {
     letterSpacing: 0,
     height: 1.2,
     color: AppColors.primary,
+    shadows: [
+      Shadow(
+        color: AppColors.primary.withValues(alpha: 0.5),
+        blurRadius: 5,
+        offset: const Offset(0, 0),
+      ),
+    ],
   );
 
   static final TextStyle productPriceOriginal = _baseTextStyle.copyWith(
@@ -150,26 +168,27 @@ class AppTheme {
     color: AppColors.textSecondary,
   );
 
-  // Light Theme
+  // Dark Theme with Futuristic Styling
   static ThemeData get lightTheme {
     return ThemeData(
       useMaterial3: true,
       colorScheme: ColorScheme.fromSeed(
         seedColor: AppColors.primary,
-        brightness: Brightness.light,
+        brightness: Brightness.dark,
         primary: AppColors.primary,
         secondary: AppColors.secondary,
         surface: AppColors.surface,
         error: AppColors.error,
       ),
       
-      // App Bar Theme
+      // App Bar Theme - Glassmorphism
       appBarTheme: AppBarTheme(
-        backgroundColor: AppColors.surface,
+        backgroundColor: AppColors.glassBackground,
         foregroundColor: AppColors.textPrimary,
         elevation: 0,
-        scrolledUnderElevation: 1,
-        shadowColor: AppColors.shadow,
+        scrolledUnderElevation: 0,
+        shadowColor: Colors.transparent,
+        surfaceTintColor: Colors.transparent,
         titleTextStyle: titleLarge.copyWith(
           color: AppColors.textPrimary,
         ),
@@ -179,39 +198,50 @@ class AppTheme {
         ),
       ),
 
-      // Card Theme
+      // Card Theme - Glassmorphism
       cardTheme: CardThemeData(
-        color: AppColors.cardBackground,
-        elevation: 2,
-        shadowColor: AppColors.cardShadow,
+        color: AppColors.glassBackground,
+        elevation: 0,
+        shadowColor: Colors.transparent,
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(16),
+          borderRadius: BorderRadius.circular(20),
+          side: BorderSide(
+            color: AppColors.glassBorder,
+            width: 1,
+          ),
         ),
         margin: const EdgeInsets.all(8),
       ),
 
-      // Elevated Button Theme
+      // Elevated Button Theme - Neon Gradient
       elevatedButtonTheme: ElevatedButtonThemeData(
         style: ElevatedButton.styleFrom(
-          backgroundColor: AppColors.buttonPrimary,
+          backgroundColor: Colors.transparent,
           foregroundColor: AppColors.textOnPrimary,
-          elevation: 2,
-          shadowColor: AppColors.shadow,
+          elevation: 0,
+          shadowColor: Colors.transparent,
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(12),
+            borderRadius: BorderRadius.circular(16),
           ),
           padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
           textStyle: buttonText,
+        ).copyWith(
+          overlayColor: WidgetStateProperty.all(
+            AppColors.primary.withValues(alpha: 0.2),
+          ),
         ),
       ),
 
-      // Outlined Button Theme
+      // Outlined Button Theme - Neon Border
       outlinedButtonTheme: OutlinedButtonThemeData(
         style: OutlinedButton.styleFrom(
           foregroundColor: AppColors.primary,
-          side: const BorderSide(color: AppColors.primary, width: 1.5),
+          side: BorderSide(
+            color: AppColors.primary,
+            width: 2,
+          ),
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(12),
+            borderRadius: BorderRadius.circular(16),
           ),
           padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
           textStyle: buttonText,
@@ -223,72 +253,91 @@ class AppTheme {
         style: TextButton.styleFrom(
           foregroundColor: AppColors.primary,
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(8),
+            borderRadius: BorderRadius.circular(12),
           ),
           padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
           textStyle: buttonText,
         ),
       ),
 
-      // Input Decoration Theme
+      // Input Decoration Theme - Glassmorphism
       inputDecorationTheme: InputDecorationTheme(
         filled: true,
-        fillColor: AppColors.inputBackground,
+        fillColor: AppColors.glassBackground,
         border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(12),
-          borderSide: const BorderSide(color: AppColors.inputBorder),
+          borderRadius: BorderRadius.circular(16),
+          borderSide: BorderSide(
+            color: AppColors.glassBorder,
+            width: 1,
+          ),
         ),
         enabledBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(12),
-          borderSide: const BorderSide(color: AppColors.inputBorder),
+          borderRadius: BorderRadius.circular(16),
+          borderSide: BorderSide(
+            color: AppColors.glassBorder,
+            width: 1,
+          ),
         ),
         focusedBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(12),
-          borderSide: const BorderSide(color: AppColors.inputBorderFocused, width: 2),
+          borderRadius: BorderRadius.circular(16),
+          borderSide: BorderSide(
+            color: AppColors.primary,
+            width: 2,
+          ),
         ),
         errorBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(12),
-          borderSide: const BorderSide(color: AppColors.inputBorderError),
+          borderRadius: BorderRadius.circular(16),
+          borderSide: const BorderSide(
+            color: AppColors.error,
+            width: 1,
+          ),
         ),
         focusedErrorBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(12),
-          borderSide: const BorderSide(color: AppColors.inputBorderError, width: 2),
+          borderRadius: BorderRadius.circular(16),
+          borderSide: const BorderSide(
+            color: AppColors.error,
+            width: 2,
+          ),
         ),
         contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
         hintStyle: bodyMedium.copyWith(color: AppColors.inputHint),
         labelStyle: bodyMedium.copyWith(color: AppColors.textSecondary),
       ),
 
-      // Bottom Navigation Bar Theme
+      // Bottom Navigation Bar Theme - Glassmorphism
       bottomNavigationBarTheme: const BottomNavigationBarThemeData(
-        backgroundColor: AppColors.surface,
+        backgroundColor: AppColors.glassBackground,
         selectedItemColor: AppColors.primary,
         unselectedItemColor: AppColors.textTertiary,
         type: BottomNavigationBarType.fixed,
-        elevation: 8,
+        elevation: 0,
         selectedLabelStyle: TextStyle(fontSize: 12, fontWeight: FontWeight.w600),
         unselectedLabelStyle: TextStyle(fontSize: 12, fontWeight: FontWeight.w400),
       ),
 
-      // Floating Action Button Theme
+      // Floating Action Button Theme - Neon
       floatingActionButtonTheme: const FloatingActionButtonThemeData(
         backgroundColor: AppColors.primary,
         foregroundColor: AppColors.textOnPrimary,
-        elevation: 4,
+        elevation: 8,
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.all(Radius.circular(16)),
+          borderRadius: BorderRadius.all(Radius.circular(20)),
         ),
       ),
 
-      // Chip Theme
+      // Chip Theme - Glassmorphism
       chipTheme: ChipThemeData(
-        backgroundColor: AppColors.surfaceVariant,
-        selectedColor: AppColors.primaryContainer,
+        backgroundColor: AppColors.glassBackground,
+        selectedColor: AppColors.primary.withValues(alpha: 0.2),
         labelStyle: labelMedium,
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(20),
+          borderRadius: BorderRadius.circular(25),
+          side: BorderSide(
+            color: AppColors.glassBorder,
+            width: 1,
+          ),
         ),
-        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
       ),
 
       // Divider Theme
@@ -326,20 +375,11 @@ class AppTheme {
         labelSmall: labelSmall,
       ),
 
-      // Scaffold Background
+      // Scaffold Background - Dark gradient
       scaffoldBackgroundColor: AppColors.background,
     );
   }
 
-  // Dark Theme (for future use)
-  static ThemeData get darkTheme {
-    return ThemeData(
-      useMaterial3: true,
-      colorScheme: ColorScheme.fromSeed(
-        seedColor: AppColors.primary,
-        brightness: Brightness.dark,
-      ),
-      // Dark theme implementation can be added here
-    );
-  }
+  // Dark Theme (same as light theme since we're using dark mode)
+  static ThemeData get darkTheme => lightTheme;
 }

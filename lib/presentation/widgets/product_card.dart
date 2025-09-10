@@ -2,9 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 
 import '../../core/theme/app_colors.dart';
+import '../../core/theme/app_theme.dart';
 import '../screens/product_detail/product_detail_screen.dart';
+import 'glassmorphism_container.dart';
 
-/// Product card widget displaying product information in a modern card design
+/// Futuristic product card widget with glassmorphism and neon effects
 /// Used in product grids and lists throughout the app
 class ProductCard extends StatelessWidget {
   final String id;
@@ -32,242 +34,243 @@ class ProductCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      elevation: 2,
-      shadowColor: AppColors.cardShadow,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(16),
-      ),
-      child: InkWell(
-        onTap: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => ProductDetailScreen(
-                productId: id,
-                productName: name,
-                price: price,
-                originalPrice: originalPrice,
-                imageUrl: imageUrl,
-                rating: rating,
-                reviewCount: reviewCount,
-                isOnSale: isOnSale,
+    return GlassmorphismCard(
+      onTap: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => ProductDetailScreen(
+              productId: id,
+              productName: name,
+              price: price,
+              originalPrice: originalPrice,
+              imageUrl: imageUrl,
+              rating: rating,
+              reviewCount: reviewCount,
+              isOnSale: isOnSale,
+            ),
+          ),
+        );
+      },
+      padding: const EdgeInsets.all(12),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          // Product Image with Neon Border
+          Container(
+            height: 120,
+            width: double.infinity,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(16),
+              gradient: LinearGradient(
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
+                colors: [
+                  AppColors.primary.withValues(alpha: 0.2),
+                  AppColors.secondary.withValues(alpha: 0.2),
+                ],
+              ),
+              border: Border.all(
+                color: AppColors.primary.withValues(alpha: 0.5),
+                width: 1,
               ),
             ),
-          );
-        },
-        borderRadius: BorderRadius.circular(16),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            // Product Image
-            Expanded(
-              flex: 3,
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(15),
               child: Stack(
                 children: [
-                  ClipRRect(
-                    borderRadius: const BorderRadius.vertical(
-                      top: Radius.circular(16),
-                    ),
-                    child: CachedNetworkImage(
-                      imageUrl: imageUrl,
-                      width: double.infinity,
-                      height: double.infinity,
-                      fit: BoxFit.cover,
-                      placeholder: (context, url) => Container(
-                        color: AppColors.surfaceVariant,
-                        child: const Center(
-                          child: CircularProgressIndicator(
-                            strokeWidth: 2,
-                            valueColor: AlwaysStoppedAnimation<Color>(AppColors.primary),
-                          ),
+                  // Product Image
+                  CachedNetworkImage(
+                    imageUrl: imageUrl,
+                    fit: BoxFit.cover,
+                    width: double.infinity,
+                    height: double.infinity,
+                    placeholder: (context, url) => Container(
+                      color: AppColors.surface,
+                      child: const Center(
+                        child: CircularProgressIndicator(
+                          color: AppColors.primary,
+                          strokeWidth: 2,
                         ),
                       ),
-                      errorWidget: (context, url, error) => Container(
-                        color: AppColors.surfaceVariant,
-                        child: const Icon(
-                          Icons.image_not_supported,
-                          color: AppColors.textTertiary,
-                          size: 48,
-                        ),
+                    ),
+                    errorWidget: (context, url, error) => Container(
+                      color: AppColors.surface,
+                      child: const Icon(
+                        Icons.image_not_supported,
+                        color: AppColors.textSecondary,
+                        size: 40,
                       ),
                     ),
                   ),
                   
-                  // Sale Badge
+                  // Sale Badge with Neon Effect
                   if (isOnSale)
                     Positioned(
                       top: 8,
                       left: 8,
                       child: Container(
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 8,
-                          vertical: 4,
-                        ),
+                        padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                         decoration: BoxDecoration(
-                          color: AppColors.error,
+                          gradient: const LinearGradient(
+                            colors: [AppColors.accent, AppColors.accentLight],
+                          ),
                           borderRadius: BorderRadius.circular(12),
+                          boxShadow: [
+                            BoxShadow(
+                              color: AppColors.accent.withValues(alpha: 0.5),
+                              blurRadius: 8,
+                              offset: const Offset(0, 2),
+                            ),
+                          ],
                         ),
-                        child: const Text(
+                        child: Text(
                           'SALE',
-                          style: TextStyle(
+                          style: AppTheme.labelSmall.copyWith(
                             color: AppColors.textOnPrimary,
-                            fontSize: 10,
                             fontWeight: FontWeight.bold,
                           ),
                         ),
                       ),
                     ),
-                  
-                  // Wishlist Button
-                  Positioned(
-                    top: 8,
-                    right: 8,
-                    child: Container(
-                      decoration: BoxDecoration(
-                        color: AppColors.surface.withValues(alpha: 0.9),
-                        borderRadius: BorderRadius.circular(20),
-                        boxShadow: [
-                          BoxShadow(
-                            color: AppColors.shadow,
-                            blurRadius: 4,
-                            offset: const Offset(0, 2),
-                          ),
-                        ],
-                      ),
-                      child: IconButton(
-                        onPressed: () {
-                          // TODO: Add to wishlist functionality
-                        },
-                        icon: const Icon(
-                          Icons.favorite_border,
-                          color: AppColors.textSecondary,
-                          size: 20,
-                        ),
-                        padding: const EdgeInsets.all(8),
-                        constraints: const BoxConstraints(
-                          minWidth: 36,
-                          minHeight: 36,
-                        ),
-                      ),
-                    ),
-                  ),
                 ],
               ),
             ),
-            
-            // Product Info
-            Expanded(
-              flex: 2,
-              child: Padding(
-                padding: const EdgeInsets.all(12),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    // Product Name
-                    Text(
-                      name,
-                      style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                        fontWeight: FontWeight.w600,
-                        height: 1.1,
-                        fontSize: 14,
-                      ),
-                      maxLines: 2,
-                      overflow: TextOverflow.ellipsis,
+          ),
+          
+          const SizedBox(height: 12),
+          
+          // Product Info
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              // Product Name with Glow Effect
+              Text(
+                name,
+                style: AppTheme.productTitle.copyWith(
+                  color: AppColors.textPrimary,
+                  shadows: [
+                    Shadow(
+                      color: AppColors.primary.withValues(alpha: 0.3),
+                      blurRadius: 5,
+                      offset: const Offset(0, 0),
                     ),
-                    
-                    const SizedBox(height: 2),
-                    
-                    // Rating
-                    Row(
+                  ],
+                ),
+                maxLines: 2,
+                overflow: TextOverflow.ellipsis,
+              ),
+              
+              const SizedBox(height: 6),
+              
+              // Rating Row
+              Row(
+                children: [
+                  // Star Rating with Neon Effect
+                  Container(
+                    padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
+                    decoration: BoxDecoration(
+                      color: AppColors.warning.withValues(alpha: 0.2),
+                      borderRadius: BorderRadius.circular(8),
+                      border: Border.all(
+                        color: AppColors.warning.withValues(alpha: 0.5),
+                        width: 1,
+                      ),
+                    ),
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
                       children: [
                         Icon(
                           Icons.star,
-                          color: AppColors.ratingFilled,
+                          color: AppColors.warning,
                           size: 12,
                         ),
                         const SizedBox(width: 2),
                         Text(
                           rating.toStringAsFixed(1),
-                          style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                            color: AppColors.textSecondary,
-                            fontWeight: FontWeight.w500,
-                            fontSize: 11,
-                          ),
-                        ),
-                        const SizedBox(width: 2),
-                        Text(
-                          '($reviewCount)',
-                          style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                            color: AppColors.textTertiary,
-                            fontSize: 10,
+                          style: AppTheme.productRating.copyWith(
+                            color: AppColors.warning,
+                            fontWeight: FontWeight.bold,
                           ),
                         ),
                       ],
                     ),
-                    
-                    const SizedBox(height: 6),
-                    
-                    // Price and Add to Cart
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        // Price
-                        Expanded(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              Text(
-                                '\$${price.toStringAsFixed(2)}',
-                                style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                                  color: AppColors.primary,
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 14,
-                                ),
-                              ),
-                              if (originalPrice != null)
-                                Text(
-                                  '\$${originalPrice!.toStringAsFixed(2)}',
-                                  style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                                    color: AppColors.textSecondary,
-                                    decoration: TextDecoration.lineThrough,
-                                    fontSize: 10,
-                                  ),
-                                ),
-                            ],
-                          ),
-                        ),
-                        
-                        // Add to Cart Button
-                        Container(
-                          decoration: BoxDecoration(
-                            color: AppColors.primary,
-                            borderRadius: BorderRadius.circular(6),
-                          ),
-                          child: IconButton(
-                            onPressed: onAddToCart,
-                            icon: const Icon(
-                              Icons.add_shopping_cart,
-                              color: AppColors.textOnPrimary,
-                              size: 16,
-                            ),
-                            padding: const EdgeInsets.all(6),
-                            constraints: const BoxConstraints(
-                              minWidth: 28,
-                              minHeight: 28,
-                            ),
-                          ),
-                        ),
-                      ],
+                  ),
+                  
+                  const SizedBox(width: 6),
+                  
+                  // Review Count
+                  Text(
+                    '($reviewCount)',
+                    style: AppTheme.productRating.copyWith(
+                      color: AppColors.textTertiary,
                     ),
-                  ],
-                ),
+                  ),
+                ],
               ),
-            ),
-          ],
-        ),
+              
+              const SizedBox(height: 8),
+              
+              // Price Row
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  // Price with Neon Glow
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        '\$${price.toStringAsFixed(2)}',
+                        style: AppTheme.productPrice.copyWith(
+                          shadows: [
+                            Shadow(
+                              color: AppColors.primary.withValues(alpha: 0.5),
+                              blurRadius: 8,
+                              offset: const Offset(0, 0),
+                            ),
+                          ],
+                        ),
+                      ),
+                      if (originalPrice != null)
+                        Text(
+                          '\$${originalPrice!.toStringAsFixed(2)}',
+                          style: AppTheme.productPriceOriginal,
+                        ),
+                    ],
+                  ),
+                  
+                  // Add to Cart Button with Neon Effect
+                  GestureDetector(
+                    onTap: onAddToCart,
+                    child: Container(
+                      padding: const EdgeInsets.all(8),
+                      decoration: BoxDecoration(
+                        gradient: const LinearGradient(
+                          colors: [AppColors.primary, AppColors.primaryLight],
+                        ),
+                        borderRadius: BorderRadius.circular(12),
+                        boxShadow: [
+                          BoxShadow(
+                            color: AppColors.primary.withValues(alpha: 0.4),
+                            blurRadius: 10,
+                            offset: const Offset(0, 4),
+                          ),
+                        ],
+                      ),
+                      child: const Icon(
+                        Icons.add_shopping_cart,
+                        color: AppColors.textOnPrimary,
+                        size: 16,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ],
+          ),
+        ],
       ),
     );
   }

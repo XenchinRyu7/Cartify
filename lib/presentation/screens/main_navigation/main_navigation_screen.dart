@@ -63,13 +63,31 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
         children: _screens,
       ),
       bottomNavigationBar: SafeArea(
-        child: BottomNavigationBar(
+        child: Container(
+          decoration: BoxDecoration(
+            color: AppColors.surface.withValues(alpha: 0.95),
+            border: Border(
+              top: BorderSide(
+                color: AppColors.primary.withValues(alpha: 0.3),
+                width: 1,
+              ),
+            ),
+            boxShadow: [
+              BoxShadow(
+                color: AppColors.shadow,
+                blurRadius: 20,
+                offset: const Offset(0, -5),
+              ),
+            ],
+          ),
+          child: BottomNavigationBar(
             currentIndex: _currentIndex,
             onTap: _onTabTapped,
             type: BottomNavigationBarType.fixed,
-            backgroundColor: AppColors.surface,
+            backgroundColor: Colors.transparent,
             selectedItemColor: AppColors.primary,
-            unselectedItemColor: AppColors.textTertiary,
+            unselectedItemColor: AppColors.textSecondary,
+            elevation: 0,
             selectedLabelStyle: const TextStyle(
               fontSize: 12,
               fontWeight: FontWeight.w600,
@@ -78,9 +96,52 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
               fontSize: 12,
               fontWeight: FontWeight.w400,
             ),
-            items: _navigationItems,
+            items: _navigationItems.map((item) {
+              final index = _navigationItems.indexOf(item);
+              final isSelected = _currentIndex == index;
+              
+              return BottomNavigationBarItem(
+                icon: Container(
+                  padding: const EdgeInsets.all(10),
+                  decoration: BoxDecoration(
+                    color: isSelected 
+                        ? AppColors.primary.withValues(alpha: 0.2)
+                        : Colors.transparent,
+                    borderRadius: BorderRadius.circular(12),
+                    border: isSelected 
+                        ? Border.all(
+                            color: AppColors.primary.withValues(alpha: 0.5),
+                            width: 1,
+                          )
+                        : null,
+                  ),
+                  child: isSelected ? item.activeIcon : item.icon,
+                ),
+                activeIcon: Container(
+                  padding: const EdgeInsets.all(10),
+                  decoration: BoxDecoration(
+                    color: AppColors.primary.withValues(alpha: 0.2),
+                    borderRadius: BorderRadius.circular(12),
+                    border: Border.all(
+                      color: AppColors.primary.withValues(alpha: 0.5),
+                      width: 1,
+                    ),
+                    boxShadow: [
+                      BoxShadow(
+                        color: AppColors.primary.withValues(alpha: 0.2),
+                        blurRadius: 8,
+                        offset: const Offset(0, 2),
+                      ),
+                    ],
+                  ),
+                  child: item.activeIcon,
+                ),
+                label: item.label,
+              );
+            }).toList(),
           ),
         ),
+      ),
     );
   }
 }
